@@ -15,13 +15,13 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 	
-	/** 链接数据库参数 **/
-	String driverName = "com.mysql.jdbc.Driver"; //驱动名称
-	String DBUser = "root"; //mysql用户名
-	String DBPasswd = ""; //mysql密码
-	String DBName = "teaching"; //数据库名
-	String MySQLServer = "127.0.0.1"; //MySQL地址
-	String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
+		/** 链接数据库参数 **/
+		String driverName = "com.mysql.jdbc.Driver"; //驱动名称
+		String DBUser = "root"; //mysql用户名
+		String DBPasswd = "mysql2016PHY"; //mysql密码
+		String DBName = "test"; //数据库名
+		String MySQLServer = "127.0.0.1"; //MySQL地址
+		String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
 
 	//数据库完整链接地址
 	String connUrl = "jdbc:mysql://"+MySQLServer+":"+MySQLServerPort+"/" + DBName + "?user="
@@ -88,7 +88,7 @@
 	<table>
 	<tr>
 	<td style="width:400">Hi, <a href="main.jsp"><%
-	sql= "SELECT * FROM `teaching`.`account` where userID='"+userID+"' LIMIT 15";
+	sql= "SELECT * FROM `test`.`account` where userID='"+userID+"' LIMIT 15";
 	System.out.println(sql);
 
 	//取得结果
@@ -116,13 +116,13 @@
 	<%
 	if (searchName!=null){
 		
-		sql= "SELECT * FROM `teaching`.`account` "
+		sql= "SELECT * FROM `test`.`account` "
 			+"where userName like '%"+searchName+"%' "
 			+"and userID !='"+userID+"' "
 			+"and userID not in ( "
-			+"select userID2 from `teaching`.`friends` where userID1='"+userID+"'"
+			+"select userID2 from `test`.`friends` where userID1='"+userID+"'"
 			+") and userID not in ( "
-			+"select userID1 from `teaching`.`friends` where userID2='"+userID+"'"
+			+"select userID1 from `test`.`friends` where userID2='"+userID+"'"
 			+" );";
 		
 		//取得结果

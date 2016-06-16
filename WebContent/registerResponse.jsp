@@ -39,8 +39,8 @@
 		/** 链接数据库参数 **/
 		String driverName = "com.mysql.jdbc.Driver"; //驱动名称
 		String DBUser = "root"; //mysql用户名
-		String DBPasswd = ""; //mysql密码
-		String DBName = "teaching"; //数据库名
+		String DBPasswd = "mysql2016PHY"; //mysql密码
+		String DBName = "test"; //数据库名
 		String MySQLServer = "127.0.0.1"; //MySQL地址
 		String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
 
@@ -61,11 +61,11 @@
 		stmt.executeQuery("SET NAMES UTF8");
 
 		//要执行的 sql 查询
-		String sql = "SELECT * FROM `teaching`.`account` where userID='"+userID+"' LIMIT 1";
+		String sql = "SELECT * FROM `test`.`account` where userID='"+userID+"' LIMIT 1";
 		//取得结果
 		ResultSet rs = stmt.executeQuery(sql);
 		if (!rs.next()){
-			sql = "INSERT INTO `teaching`.`account` VALUES('"+userID+"','"+passwd+"','"+userName+"','"+sex+"',"+birthYear+","+birthMonth+")";
+			sql = "INSERT INTO `test`.`account` VALUES('"+userID+"','"+passwd+"','"+userName+"','"+sex+"',"+birthYear+","+birthMonth+")";
 			System.out.println(sql);
 			stmt.execute(sql);
 			ok=1;

@@ -9,8 +9,9 @@
 	int ok=0;
     	response.setCharacterEncoding("UTF-8");
     	request.setCharacterEncoding("UTF-8");
-	if(request.getParameter("friendID")!=null){
-		String friendID=request.getParameter("friendID");//获取请求参数  
+	if(request.getParameter("words")!=null){
+		String content= java.net.URLDecoder.decode(request.getParameter("words"),"UTF-8");//获取请求参数  
+		String statementID=request.getParameter("statementID");//获取请求参数  
 		String userID=(String)session.getAttribute("userID");
 		String releaseTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()); 
 
@@ -20,12 +21,12 @@
 			+ path + "/";
 
 		/** 链接数据库参数 **/
-	String driverName = "com.mysql.jdbc.Driver"; //驱动名称
-	String DBUser = "root"; //mysql用户名
-	String DBPasswd = ""; //mysql密码
-	String DBName = "teaching"; //数据库名
-	String MySQLServer = "127.0.0.1"; //MySQL地址
-	String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
+		String driverName = "com.mysql.jdbc.Driver"; //驱动名称
+		String DBUser = "root"; //mysql用户名
+		String DBPasswd = "mysql2016PHY"; //mysql密码
+		String DBName = "test"; //数据库名
+		String MySQLServer = "127.0.0.1"; //MySQL地址
+		String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
 
 		//数据库完整链接地址
 		String connUrl = "jdbc:mysql://"+MySQLServer+":"+MySQLServerPort+"/" + DBName + "?user="
@@ -44,10 +45,10 @@
 		stmt.executeQuery("SET NAMES UTF8");
 
 		//要执行的 sql 查询
-		
-		String sql = "INSERT INTO  `teaching`.`friends` VALUES ('"+userID+"','"+friendID+"')";
-		System.out.println("add.jsp");
+		String sql = "INSERT INTO  `test`.`comment` (userID,statementID,releaseTime,content) VALUES ('"+userID+"','"+statementID+"','"+releaseTime+"','"+content+"')";
+		System.out.println("submitReply.jsp");
 		System.out.println(sql);
+		out.println(sql);
 		//取得结果
 		stmt.execute(sql);
 		/** 关闭连接 **/
@@ -56,3 +57,8 @@
 	}
 	
 %>
+<body>
+<head>
+<meta http-equiv="content-Type" content="text/html;charset=UTF-8"> 
+</head>
+</body>

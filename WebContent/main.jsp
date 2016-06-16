@@ -10,7 +10,6 @@
 	response.setCharacterEncoding("UTF-8");
 	request.setCharacterEncoding("UTF-8");
 	String userID=(String)session.getAttribute("userID");
-	String targetID=(String)request.getParameter("userID");
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 		+ request.getServerName() + ":" + request.getServerPort()
@@ -19,8 +18,8 @@
 	/** 链接数据库参数 **/
 	String driverName = "com.mysql.jdbc.Driver"; //驱动名称
 	String DBUser = "root"; //mysql用户名
-	String DBPasswd = ""; //mysql密码
-	String DBName = "teaching"; //数据库名
+	String DBPasswd = "mysql2016PHY"; //mysql密码
+	String DBName = "Test"; //数据库名
 	String MySQLServer = "127.0.0.1"; //MySQL地址
 	String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
 
@@ -39,14 +38,14 @@
 
 	//设置字符集
 	stmt.executeQuery("SET NAMES UTF8");
-
+	
 	
 	//申明～？
 	Statement stmt2 = conn.createStatement();
 
 	//设置字符集
 	stmt2.executeQuery("SET NAMES UTF8");
-	
+
 	//要执行的 sql 查询
 	String sql;
 	
@@ -57,14 +56,54 @@
 	<title>~WELCOME TO MY HOMEPAGE~</title>
 	<meta http-equiv="content-Type" content="text/html;charset=UTF-8"> 
 	<style>
+		.input_detail {
+			width:500px;
+			height: 80px;
+			border: 1px solid #ccc;
+			border-left-color: #9a9a9a;
+			border-top-color: #9a9a9a;
+			outline: none;
+			word-wrap: break-word;
+			font-size: 18px;
+			overflow:auto;
+		}
 		.comment{
 			border-style: dashed; 
 			border-width: 1px 0px 0px 0px; 
-			border-color: "#202020";
+			border-color: "#dbf8cc";
 		}
 	</style>
 	<SCRIPT type="text/javascript">
-	function reply(statementID){
+		function submitStatement(){
+			var statement=document.getElementById("statement");
+			var strInput = statement.value;
+			if (strInput!=""){
+				var xmlhttp=null;
+				if (window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}
+				else{
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				if (xmlhttp!=null){
+					xmlhttp.onreadystatechange=function(){
+						if (xmlhttp.readyState==4 && xmlhttp.status==200){
+							window.location.reload();
+						}
+					}
+					strInput="submitStatement.jsp?words="+strInput;
+					strInput=encodeURI(strInput);
+					strInput=encodeURI(strInput);
+					xmlhttp.open("GET",strInput,true);
+					xmlhttp.send();
+				}
+			}else{
+				alert("请输入内容！");
+			}
+		}
+		function reply(statementID){
 			var statementDoc=document.getElementById(statementID);
 			if(statementDoc.style.display=="none"){
 				statementDoc.style.display="";
@@ -97,7 +136,10 @@
 							window.location.reload();
 						}
 					}
-					xmlhttp.open("GET","submitReply.jsp?words="+strInput+"&statementID="+statementID,true);
+					strInput="submitReply.jsp?words="+strInput+"&statementID="+statementID;
+					strInput=encodeURI(strInput);
+					strInput=encodeURI(strInput);
+					xmlhttp.open("GET",strInput,true);
 					xmlhttp.send();
 				}
 			}else{
@@ -111,7 +153,7 @@
 	<table>
 	<tr>
 	<td style="width:400">Hi, <a href="main.jsp"><%
-	sql= "SELECT * FROM `teaching`.`account` where userID='"+userID+"' LIMIT 15";
+	sql= "SELECT * FROM `Test`.`account` where userID='"+userID+"' LIMIT 15";
 	System.out.println(sql);
 
 	//取得结果
@@ -120,52 +162,51 @@
 		out.println(rs.getString("UserName"));
 	}%></a>
 	</td>
-	<td style="width:300">
+	<td style="width:500">
 	<form action="search.jsp" method="post">
 		<input type="text" name="searchName" maxlength="20" style="width:120"/>
-		<input type="submit" value="查找好友" />
+		<input type="submit" value="寻找新好友" />
+        <input type="button" value="我的好友" onClick="location.href='myfriends.jsp'"/>
 		<input type="button" value="退出登录" onClick="location.href='logout.jsp'" />
 	</form>
+    <form action="secondfriend.jsp" method="post">
+    	<input type="text" name="secName" maxlength="20" style="width:120"/>
+    	<input type="submit" value="二度人脉" />
+    </form>
 	</td>
 	</tr>
 	</table>
 	</div>
 	<hr width="700" align="center"/>
 	<div align="center">
-	<p width="700">
-	<%
-	sql= "SELECT * FROM `teaching`.`account` where userID='"+targetID+"' LIMIT 15";
-	System.out.println(sql);
-
-	//取得结果
-	String targetName=null;
-	rs = stmt.executeQuery(sql);
-	if (rs.next()){
-		targetName=rs.getString("UserName");
-		out.print(targetName+" ");
-		out.print(rs.getString("sex")+" ");
-		out.print(rs.getString("birthYear")+"年");
-		out.print(rs.getString("birthMonth")+"月");
-	}%>
-	</p>
+	<font size="4">我想灌水：</font>
+	<TEXTAREA type="text" id="statement"  rows=4 cols=15 class="input_detail"></TEXTAREA>
+	<input style="height: 20; width:50" type="button" value="发布" onClick="submitStatement()"/>
 	</div>
 	<%
-	sql= "SELECT statementID,releaseTime,content "
-		+				"FROM `teaching`.`statement` "
-		+	"where userID='"+ targetID+"' "
+	sql= "SELECT a.userID as userID,userName,statementID,releaseTime,content "
+		+				"FROM `Test`.`account` as a, `Test`.`statement` as b "
+		+	"where a.userID=b.userID and ("
+		+	"(b.userID='"+ userID+"') "
+		+	"or b.userID in ( "
+		+		"SELECT userID1 from `Test`.`friends` where userID2='"+ userID+"'"
+		+	")or b.userID in("
+		+		"SELECT userID2 from `Test`.`friends` where userID1='"+ userID+"'"
+		+	") "
+		+")"
 	+"order by releaseTime desc "
 	+"limit 0,10;";
-	
+	System.out.println(sql);
 	//取得结果
 	rs = stmt.executeQuery(sql);
+	
 	while (rs.next()){
 	%>
 	<div align="center">
 	<hr width="700"/>
 	<table bgcolor="">
-		<tr height="">
-		
-	<td  width="500"><font size="4" color="black"><a href="view.jsp?userID=<%out.print(targetID);%>"><%out.print(targetName);%></a>:</font>
+	<tr height="10">
+	<td  width="500"><font size="4" color="black"><a href="view.jsp?userID=<%out.print(rs.getString("userID"));%>"><%out.print(rs.getString("userName"));%></a>:</font>
 	</td>
 	</tr>
 	<tr height="100">
@@ -173,11 +214,11 @@
 	</td>
 	<td width="110"><font size="3" color="gray"><%out.print(rs.getString("releaseTime"));%></font>
 	</td>
-	<td width="60"><a href="javascript:reply('<%out.print(rs.getString("statementID"));%>')">回复</a><td>
+	<td width="40"><a href="javascript:reply('<%out.print(rs.getString("statementID"));%>')">回复</a><td>
 	</tr>
 	<%
 	String sql2="SELECT a.userID as userID,userName,commentID,releaseTime,content "
-		+				"FROM `teaching`.`account` as a, `teaching`.`comment` as b "
+		+				"FROM `Test`.`account` as a, `Test`.`comment` as b "
 		+	"where a.userID=b.userID and "
 		+	"b.statementID='"+ rs.getString("statementID")+"' "
 		+"order by releaseTime "
@@ -188,12 +229,11 @@
 	%>
 	<tr height="">
 		
-	<td class="comment" width="500"><font size="3" color="black"><a href="view.jsp?userID=<%out.print(rs2.getString("userID"));%>"><%out.print(rs2.getString("userName"));%></a>回复:</font>
-	<font size="4" color="black"><%out.print(rs2.getString("content"));%></font>
+	<td class="comment" width="500"><font size="3" color="black"><a href="view.jsp?userID=<%out.print(rs2.getString("userID"));%>"><%out.print(rs2.getString("userName"));%></a>回复:</font><font size="4" color="black"><%out.print(rs2.getString("content"));%></font>
 	</td>
-	<td class="comment"  width="110"><font size="3" color="gray"><%out.print(rs2.getString("releaseTime"));%></font>
+	<td  class="comment" width="110"><font size="3" color="gray"><%out.print(rs2.getString("releaseTime"));%></font>
 	</td>
-	<td  class="comment"  width="60"><td>
+	<td  class="comment" width="60"><td>
 	</tr>
 	<%
 	}
@@ -208,6 +248,12 @@
 	<%
 	}
 	%>
+<script type="text/javascript">
+setInterval(function(){
+	window.location.reload();
+},30000);
+
+</script>    
 </body>
 </html>
 <%
