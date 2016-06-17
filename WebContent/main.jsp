@@ -194,7 +194,7 @@
 		+		"SELECT userID2 from `Test`.`friends` where userID1='"+ userID+"'"
 		+	") "
 		+")"
-	+"order by releaseTime desc "
+	+"order by releaseTime "
 	+"limit 0,10;";
 	System.out.println(sql);
 	//取得结果
