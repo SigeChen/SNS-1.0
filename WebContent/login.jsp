@@ -15,7 +15,7 @@
 %>
 	
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>	
 		<title>系统登录</title>
@@ -37,6 +37,9 @@ font-weight: bold;
 .style5 {...}{font-size: 16px}
 -->
 </style>
+ <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </head>
 <body bgcolor="#dbf8cc" width="300" height="300">
 <center>
