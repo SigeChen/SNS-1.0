@@ -20,12 +20,12 @@
 			+ path + "/";
 
 		/** 链接数据库参数 **/
-	String driverName = "com.mysql.jdbc.Driver"; //驱动名称
-	String DBUser = "root"; //mysql用户名
-	String DBPasswd = "mysql2016PHY"; //mysql密码
-	String DBName = "test"; //数据库名
-	String MySQLServer = "127.0.0.1"; //MySQL地址
-	String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
+		String driverName = "com.mysql.jdbc.Driver"; //驱动名称
+		String DBUser = "root"; //mysql用户名
+		String DBPasswd = ""; //mysql密码
+		String DBName = "test"; //数据库名
+		String MySQLServer = "127.0.0.1"; //MySQL地址
+		String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
 
 		//数据库完整链接地址
 		String connUrl = "jdbc:mysql://"+MySQLServer+":"+MySQLServerPort+"/" + DBName + "?user="

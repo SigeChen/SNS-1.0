@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="checkvalid.jsp" %>
 <%@page import="java.util.*"%>
 <%@page import="com.mysql.jdbc.Driver"%>
@@ -46,15 +46,17 @@
 	String searchName=(String)request.getParameter("searchName");
 	System.out.println(searchName);
 	String sql=null;
+	ResultSet rs=null;
 	
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>搜索页</title>
-	<meta http-equiv="content-Type" content="text/html;charset=UTF-8"> 
-	
-	<SCRIPT type="text/javascript">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<title>~*New Friends*~</title>
+	<script type="text/javascript">
 		function addFriend(userID){
 			if (userID!=""){
 				var xmlhttp=null;
@@ -71,7 +73,7 @@
 						if (xmlhttp.readyState==4 && xmlhttp.status==200){
 							//window.location.href="search.jsp?searchName=<%out.print(searchName);%>";
 							var s=document.getElementById(userID);
-							s.innerHTML="已添加";
+							s.innerHTML="Completed";
 						}
 					}
 					xmlhttp.open("GET","add.jsp?friendID="+userID,true);
@@ -81,140 +83,28 @@
 				alert("请输入内容！");
 			}
 		}
-	</SCRIPT>
-	<SCRIPT type="text/javascript">
-		function submitStatement(){
-			var statement=document.getElementById("statement");
-			var strInput = statement.value;
-			if (strInput!=""){
-				var xmlhttp=null;
-				if (window.XMLHttpRequest){
-					// code for IE7+, Firefox, Chrome, Opera, Safari
-					xmlhttp=new XMLHttpRequest();
-				}
-				else{
-					// code for IE6, IE5
-					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				if (xmlhttp!=null){
-					xmlhttp.onreadystatechange=function(){
-						if (xmlhttp.readyState==4 && xmlhttp.status==200){
-							window.location.reload();
-						}
-					}
-					strInput="submitStatement.jsp?words="+strInput;
-					strInput=encodeURI(strInput);
-					strInput=encodeURI(strInput);
-					xmlhttp.open("GET",strInput,true);
-					xmlhttp.send();
-				}
-			}else{
-				alert("请输入内容！");
-			}
-		}
-		function reply(statementID){
-			var statementDoc=document.getElementById(statementID);
-			if(statementDoc.style.display=="none"){
-				statementDoc.style.display="";
-				statementDoc=document.getElementById(statementID+"Button");
-				statementDoc.style.display="";
-			}
-			else{
-				statementDoc.style.display="none";
-				statementDoc=document.getElementById(statementID+"Button");
-				statementDoc.style.display="none";
-			}
-		}
-		function submitReply(statementID){
-			var statementDoc=document.getElementById(statementID);
-			var strInput = statementDoc.value;
-			if (strInput!=""){
-				var xmlhttp=null;
-				if (window.XMLHttpRequest){
-					// code for IE7+, Firefox, Chrome, Opera, Safari
-					xmlhttp=new XMLHttpRequest();
-				}
-				else{
-					// code for IE6, IE5
-					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				if (xmlhttp!=null){
-					xmlhttp.onreadystatechange=function(){
-						if (xmlhttp.readyState==4 && xmlhttp.status==200){
-						
-							window.location.reload();
-						}
-					}
-					strInput="submitReply.jsp?words="+strInput+"&statementID="+statementID;
-					strInput=encodeURI(strInput);
-					strInput=encodeURI(strInput);
-					xmlhttp.open("GET",strInput,true);
-					xmlhttp.send();
-				}
-			}else{
-				alert("请输入内容！");
-			}
-		}
-	</SCRIPT>
- <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-   <script language="JavaScript">  
-   function secondfriend(){ searchForm.name="secName";frm.action="secondfriend.jsp";frm.submit(); }   
-   function newfriend(){  searchForm.name="searchName";frm.action="search.jsp"; frm.submit(); }
-    	   </script>
+
+	</script>
 </head>
 
-<body  align="center" style="width:700" bgcolor="#dbf8cc">
-	<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="main.jsp">SNS-1.0</a>
-    </div>
+<body>
+	<div class ="title">
+	<a href="main.jsp" class="text1"  style="color:#FFFFFF;text-decoration:none;">My Homepage </a>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="main.jsp">我的主页 <span class="sr-only">(current)</span></a></li>
-        <li><a href="myfriends.jsp">我的好友</a></li>
-      
+		<div style="position:relative;right:10px;top:10px;float:right;">
+	    	<form action="secondfriend.jsp" method="post">
+	    		<input type="text" name="secName" maxlength="15" style="width:120"/>
+	    		<input class="button2" type="submit" value="Network" />
+	   	</form></div>
+		<div style="position:relative;right:30px;top:10px;float:right;">
+		<form action="search.jsp" method="post">
+			<input type="text" name="searchName" maxlength="15" style="width:120"/>
+			<input class="button2" type="submit" value="New Friends" />
+	        		<input class="button2" type="button" value="My Friends" onClick="location.href='myfriends.jsp'"/>
+			<input class="button2" type="button" value="Logout" onClick="location.href='logout.jsp'" />
+		</form></div>
+	</div>
    
-      </ul>
-   
-       <form  class="navbar-form navbar-left"  name="frm"  action="" method="post">
-         <div class="form-group">
-    	<input id="searchForm" type="text" class="form-control" placeholder="寻找"/>
-    	     </div>
-    	      <input type="submit"  class="btn btn-default" value="新好友" onClick="newfriend()" />
-    	     <input type="submit"  class="btn btn-default" value="二度人脉" onClick="secondfriend()"/>
-    	     		
-    </form>
-        
-	   </ul>
-      <ul class="nav navbar-nav navbar-right">
-      
-       <li style="width:400"> <a href="main.jsp"><%
-	sql= "SELECT * FROM `Test`.`account` where userID='"+userID+"' LIMIT 15";
-	System.out.println(sql);
-
-	//取得结果
-	ResultSet rs = stmt.executeQuery(sql);
-	if (rs.next()){
-		out.println(rs.getString("UserName"));
-	}%></a> </li>
-	  <li><a href="logout.jsp">退出登录</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-	<hr  style="width:700" />
 	<%
 	if (searchName!=null){
 		
@@ -232,13 +122,10 @@
 		rs = stmt.executeQuery(sql);
 		while (rs.next()){
 		%>
-		<div align="center" style="width:700" >
-		<li>
-		<a href="view.jsp?userID=<%out.print(rs.getString("userID"));%>"><%out.print(rs.getString("userName"));%></a> <%out.print(rs.getString("sex"));%> <%out.print(rs.getString("birthYear"));%>年<%out.print(rs.getString("birthMonth"));%>月
-		
-		<span id="<%out.print(rs.getString("userID"));%>"><input type="button" value="加为好友" onClick="addFriend('<%out.print(rs.getString("userID"));%>')" /></span>
-		
-		</li>
+		<div class="list box-shadow" >
+			<span style="font-family:GOTHICB;color:#FFFFFF;position: relative;left:40px;top:15px;font-size:120%;"><a href="view.jsp?userID=<%out.print(rs.getString("userID"));%>" style="color:#222222;text-decoration:none;"><%out.print(rs.getString("userName"));%></a>&nbsp&nbsp&nbsp<%if(rs.getString("sex")=="女") out.print("Female"); else out.print("Male");%>&nbsp&nbsp&nbsp<%out.print(rs.getString("birthMonth"));%>&nbsp/&nbsp<%out.print(rs.getString("birthYear"));%></span>
+
+			<span id="<%out.print(rs.getString("userID"));%>"><input class="button1" style="position:relative;left:50px;top:12px;" type="button" value="Add" onClick="addFriend('<%out.print(rs.getString("userID"));%>')" /></span>
 		</div>
 		<%
 		}

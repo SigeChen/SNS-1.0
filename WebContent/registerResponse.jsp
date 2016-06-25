@@ -77,36 +77,41 @@
 	}}
 %>
 
-<body bgcolor="papayawhip">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<title>~*WAIT*~</title>
+</head>
+<body>
+<div class ="title"><span class="text1">Welcome</span> </div>
+<div class ="waitblock box-shadow">
 <%
 if (ok==1){
-	out.println("<p>注册成功！！</p>");
-	out.println("<p>5秒后返回<a href=\"login.jsp\">登陆</a>页面！</p>");
+	out.println("<p class=\"text3\">Completed</p>");
+	out.println("<p class=\"text3\">Return to <a href=\"login.jsp\">login page</a> after 5s.</p>");
 	String content=5+";URL="+"login.jsp";
 	response.setHeader("REFRESH",content); 
 }else if (ok == 0){
-	out.println("<p>该用户名已占用！</p>");
-	out.println("<p>5秒后返回注册页面！！</p>");
+	out.println("<p class=\"text3\">ID invaild</p>");
+	out.println("<p class=\"text3\">Return to <a href=\"register.jsp\">signup</a> after 5s.</p>");
 	String content=5+";URL="+"register.jsp";
 	response.setHeader("REFRESH",content); 
 }
-else if (ok == 2){
-		out.println("<p>姓名不能为空！</p>");
-	out.println("<p>5秒后返回注册页面！！</p>");
+else if (ok == 2 || ok==4){
+	out.println("<p class=\"text3\">Name invaild</p>");
+	out.println("<p class=\"text3\">Return to <a href=\"register.jsp\">signup</a> after 5s.</p>");
 	String content=5+";URL="+"register.jsp";
 	response.setHeader("REFRESH",content); 
 }
 else if (ok == 3){
-		out.println("<p>密码不能为空！</p>");
-	out.println("<p>5秒后返回注册页面！！</p>");
-	String content=5+";URL="+"register.jsp";
-	response.setHeader("REFRESH",content); 
-}
-else if (ok == 4){
-		out.println("<p>用户名不能为空！</p>");
-	out.println("<p>5秒后返回注册页面！！</p>");
+	out.println("<p class=\"text3\">Password invaild</p>");
+	out.println("<p class=\"text3\">Return to <a href=\"register.jsp\">signup</a> after 5s.</p>");
 	String content=5+";URL="+"register.jsp";
 	response.setHeader("REFRESH",content); 
 }
 %>
+</div>
 </body>
+</html>

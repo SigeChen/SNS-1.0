@@ -52,11 +52,13 @@
 	
 	
 %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>我的主页</title>
-	<meta http-equiv="content-Type" content="text/html;charset=UTF-8"> 
-	<SCRIPT type="text/javascript">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<title>~*Information*~</title>
+  	<script language="JavaScript">  
 		function submitStatement(){
 			var statement=document.getElementById("statement");
 			var strInput = statement.value;
@@ -129,22 +131,9 @@
 				alert("请输入内容！");
 			}
 		}
-	</SCRIPT>
- <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-   <script language="JavaScript">  
-   function secondfriend(){ searchForm.name="secName";frm.action="secondfriend.jsp";frm.submit(); }   
-   function newfriend(){  searchForm.name="searchName";frm.action="search.jsp"; frm.submit(); }
-    	   </script>
-	<style>
-		.comment{
-			border-style: dashed; 
-			border-width: 1px 0px 0px 0px; 
-			border-color: "#202020";
-		}
-	</style>
-	<SCRIPT type="text/javascript">
+  		function secondfriend(){ searchForm.name="secName";frm.action="secondfriend.jsp";frm.submit(); }   
+ 		function newfriend(){  searchForm.name="searchName";frm.action="search.jsp"; frm.submit(); }
+
 	function reply(statementID){
 			var statementDoc=document.getElementById(statementID);
 			if(statementDoc.style.display=="none"){
@@ -185,61 +174,37 @@
 				alert("请输入内容！");
 			}
 		}
-	</SCRIPT>
+	</script>
 </head>
-<body  align="center" style="width:700" bgcolor="#dbf8cc">
-	<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="main.jsp">SNS-1.0</a>
-    </div>
+<body>
+	<div class ="title">
+	<span class="text1">Welcome, 
+	<a href="main.jsp" style="color:#ec5a52;text-decoration:none;">
+	<%
+		sql= "SELECT * FROM `test`.`account` where userID='"+userID+"' LIMIT 15";
+		System.out.println(sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		if (rs.next()){
+			out.println(rs.getString("UserName"));
+	}%></a></span>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="main.jsp">我的主页 <span class="sr-only">(current)</span></a></li>
-        <li><a href="myfriends.jsp">我的好友</a></li>
-      
-   
-      </ul>
-   
-       <form  class="navbar-form navbar-left"  name="frm"  action="" method="post">
-         <div class="form-group">
-    	<input id="searchForm" type="text" class="form-control" placeholder="寻找"/>
-    	     </div>
-    	      <input type="submit"  class="btn btn-default" value="新好友" onClick="newfriend()" />
-    	     <input type="submit"  class="btn btn-default" value="二度人脉" onClick="secondfriend()"/>
-    	     		
-    </form>
-        
-	   </ul>
-      <ul class="nav navbar-nav navbar-right">
-      
-       <li style="width:400"> <a href="main.jsp"><%
-	sql= "SELECT * FROM `Test`.`account` where userID='"+userID+"' LIMIT 15";
-	System.out.println(sql);
+		<div style="position:relative;right:10px;top:10px;float:right;">
+	    	<form action="secondfriend.jsp" method="post">
+	    		<input type="text" name="secName" maxlength="15" style="width:120"/>
+	    		<input class="button2" type="submit" value="Network" />
+	   	</form></div>
+		<div style="position:relative;right:30px;top:10px;float:right;">
+		<form action="search.jsp" method="post">
+			<input type="text" name="searchName" maxlength="15" style="width:120"/>
+			<input class="button2" type="submit" value="New Friends" />
+	        		<input class="button2" type="button" value="My Friends" onClick="location.href='myfriends.jsp'"/>
+			<input class="button2" type="button" value="Logout" onClick="location.href='logout.jsp'" />
+		</form></div>
+	</div>
 
-	//取得结果
-	ResultSet rs = stmt.executeQuery(sql);
-	if (rs.next()){
-		out.println(rs.getString("UserName"));
-	}%></a> </li>
-	  <li><a href="logout.jsp">退出登录</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
 
-	<hr width="700" align="center"/>
-	<div align="center">
-	<p width="700">
+	<div class="list box-shadow" >
+	<p ><span style="font-family:GOTHICB;color:#FFFFFF;position: relative;left:10px;top:15px;font-size:120%;">
 	<%
 	sql= "SELECT * FROM `test`.`account` where userID='"+targetID+"' LIMIT 15";
 	System.out.println(sql);
@@ -249,13 +214,17 @@
 	rs = stmt.executeQuery(sql);
 	if (rs.next()){
 		targetName=rs.getString("UserName");
-		out.print(targetName+" ");
-		out.print(rs.getString("sex")+" ");
-		out.print(rs.getString("birthYear")+"年");
-		out.print(rs.getString("birthMonth")+"月");
+		out.print(targetName+"  ");
+		if(rs.getString("sex")=="女")
+		out.print("Female ");
+		else out.print("Male ");
+		out.print(rs.getString("birthMonth")+" / ");
+		out.print(rs.getString("birthYear"));
+		
 	}%>
-	</p>
+	</span></p>
 	</div>
+	<div  style="margin-top:40px;">
 	<%
 	sql= "SELECT statementID,releaseTime,content "
 		+				"FROM `test`.`statement` "
@@ -268,53 +237,50 @@
 	while (rs.next()){
 	%>
 	<div align="center">
-	<hr width="700"/>
-	<table bgcolor="">
-		<tr height="">
+		<hr width="800" color="#ffffff"/>
+		<table bgcolor="">
+			<tr>
+				<td  width="500"><a style="font-family:GOTHICB;color:#FFFFFF;text-decoration:none;" href="view.jsp?userID=<%out.print(targetID);%>"><%out.print(targetName);%>:</a></td>
+			</tr>
+			<tr height="100">
+				<td width="600"><span style="font-family:GOTHIC;color:#FFFFFF;"><%out.print(rs.getString("content"));%></span></td>
+				<td width="110"><span style="font-family:GOTHIC;color:#aaaaaa;"><%out.print(rs.getString("releaseTime"));%></span></td>
+				<td width="40"><input class="button2" type="button" value="Reply" onClick="reply('<%out.print(rs.getString("statementID"));%>')"/><td>
+			</tr>
+			<%
+			sql="SELECT a.userID as userID,userName,commentID,releaseTime,content "
+				+				"FROM `test`.`account` as a, `test`.`comment` as b "
+				+	"where a.userID=b.userID and "
+				+	"b.statementID='"+ rs.getString("statementID")+"' "
+				+"order by releaseTime "
+				+"limit 0,10;";
+				System.out.println(sql);
+				ResultSet rs2 = stmt2.executeQuery(sql);
+			while (rs2.next()){
+			%>
+				<tr height="">
 		
-	<td  width="500"><font size="4" color="black"><a href="view.jsp?userID=<%out.print(targetID);%>"><%out.print(targetName);%></a>:</font>
-	</td>
-	</tr>
-	<tr height="100">
-	<td width="500"><font size="4" color="black"><%out.print(rs.getString("content"));%></font>
-	</td>
-	<td width="110"><font size="3" color="gray"><%out.print(rs.getString("releaseTime"));%></font>
-	</td>
-	<td width="60"><a href="javascript:reply('<%out.print(rs.getString("statementID"));%>')">回复</a><td>
-	</tr>
-	<%
-	String sql2="SELECT a.userID as userID,userName,commentID,releaseTime,content "
-		+				"FROM `test`.`account` as a, `test`.`comment` as b "
-		+	"where a.userID=b.userID and "
-		+	"b.statementID='"+ rs.getString("statementID")+"' "
-		+"order by releaseTime "
-		+"limit 0,10;";
-	System.out.println(sql2);
-	ResultSet rs2 = stmt2.executeQuery(sql2);
-	while (rs2.next()){
-	%>
-	<tr height="">
-		
-	<td class="comment" width="500"><font size="3" color="black"><a href="view.jsp?userID=<%out.print(rs2.getString("userID"));%>"><%out.print(rs2.getString("userName"));%></a>回复:</font>
-	<font size="4" color="black"><%out.print(rs2.getString("content"));%></font>
-	</td>
-	<td class="comment"  width="110"><font size="3" color="gray"><%out.print(rs2.getString("releaseTime"));%></font>
-	</td>
-	<td  class="comment"  width="60"><td>
-	</tr>
-	<%
-	}
-	rs2.close();
-	%>
-	</table>
-	<div>
-	<input style="display:none; height:25;width:500" id="<%out.print(rs.getString("statementID"));%>" value=""/>
-	<input type="button" style="display:none;" id="<%out.print(rs.getString("statementID"));%>Button" value="确定" onClick="submitReply('<%out.print(rs.getString("statementID"));%>')"/>
-	</div>
+					<td class="comment" width="500"><span style="font-family:GOTHIC;color:#aaaaaa;"><a href="view.jsp?userID=<%out.print(rs2.getString("userID"));%>"  style="color:#ffffff;text-decoration:none;"><%out.print(rs2.getString("userName"));%></a> reply: </span><span style="font-family:GOTHIC;color:#FFFFFF;"><%out.print(rs2.getString("content"));%></span>
+					</td>
+					<td  class="comment" width="110"><span style="font-family:GOTHIC;color:#aaaaaa;"><%out.print(rs2.getString("releaseTime"));%></span>
+					</td>
+					<td  class="comment" width="60"><td>
+				</tr>
+			<%
+			}
+			rs2.close();
+			%>
+		</table>
+		<div>
+			<input style="display:none; height:25;width:500" id="<%out.print(rs.getString("statementID"));%>" value=""/>
+			<input class="button2" type="button" style="display:none;" id="<%out.print(rs.getString("statementID"));%>Button" value="Submit" onClick="submitReply('<%out.print(rs.getString("statementID"));%>')"/>
+		</div>
+		</div>
 	</div>
 	<%
 	}
 	%>
+	</div>
 </body>
 </html>
 <%

@@ -23,7 +23,7 @@
 		String driverName = "com.mysql.jdbc.Driver"; //驱动名称
 		String DBUser = "root"; //mysql用户名
 		String DBPasswd = "mysql2016PHY"; //mysql密码
-		String DBName = "Test"; //数据库名
+		String DBName = "test"; //数据库名
 		String MySQLServer = "127.0.0.1"; //MySQL地址
 		String MySQLServerPort = "3306"; //MySQL端口号（默认为3306）
 

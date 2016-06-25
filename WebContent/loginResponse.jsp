@@ -63,12 +63,28 @@
 		stmt.close();
 		rs.close();
 	}
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<title>~*WAIT*~</title>
+</head>
+<body>
+<div class ="title"><span class="text1">Welcome</span> </div>
+<div class ="waitblock box-shadow">
+<%
 if (ok==1){
 	String content=0+";URL="+"main.jsp";
 	response.setHeader("REFRESH",content); 
 }else{
-	out.println("用户名或密码错误！");
+	out.println("<p class=\"text3\">Password invaild</p>");
 	String content=2+";URL="+"login.jsp";
 	response.setHeader("REFRESH",content); 
 }
 %>
+</div>
+</body>
+</html>
